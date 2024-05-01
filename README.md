@@ -43,7 +43,7 @@ if (stytch_session_jwt && ydc_stytch_session) {
 > - claude_3_haiku
 > - command_r_plus
 
-不支持api格式消息，使用增加提示解决(可能会露馅)
+不支持api格式消息，使用增加提示解决(可能会露馅，未测试)
 > - command_r
 > - zephyr
 

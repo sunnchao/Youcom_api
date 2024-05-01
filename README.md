@@ -9,7 +9,7 @@ pip install -r requirements.txt
 python api.py
 ```
 ## 使用
-请求头需携带Authorization 内容是you.com的cookie。使用以下代码在浏览器F12开发者模式-控制台输入获取
+请求头需携带Authorization 内容是you.com的cookie。使用以下代码在浏览器F12开发者模式-控制台输入获取,nextchat则设置为API KEY。
 ```bash
 var cookie = document.cookie;
 var stytch_session_jwt = cookie.match(/stytch_session_jwt=([^;]+)/);

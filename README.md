@@ -30,7 +30,10 @@ if (stytch_session_jwt && ydc_stytch_session) {
 ```
 
 调用参数为openai API所需的参数
-
+```request body
 {"messages":[,{"role":"user","content":"你好"}],"stream":true,"model":"gpt-4"}
+```
+## 模型支持
+
 ## 其他事项
 目前实测ip干净情况下不需要过cf盾。请自测

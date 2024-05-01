@@ -33,7 +33,26 @@ if (stytch_session_jwt && ydc_stytch_session) {
 ```request body
 {"messages":[,{"role":"user","content":"你好"}],"stream":true,"model":"gpt-4"}
 ```
-## 模型支持
+## 支持的模型
+使用发送API格式内容的对话，可正常返回
+> - gpt_4
+> - gpt_4_turbo
+> - claude_2
+> - claude_3_opus
+> - claude_3_sonnet
+> - claude_3_haiku
+> - command_r_plus
+
+不支持api格式消息，使用增加提示解决(可能会露馅)
+> - command_r
+> - zephyr
+
+不支持上下文
+> - databricks_dbrx_instruct 
+> - gemini_pro
+> - gemini_1_5_pro
 
 ## 其他事项
 目前实测ip干净情况下不需要过cf盾。请自测
+
+gemini_pro与gemini_1_5_pro同样使用openai API，nextchat可使用名称gem_pro和gem_1_5_pro进行调用

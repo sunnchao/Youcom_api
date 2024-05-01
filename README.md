@@ -52,6 +52,12 @@ if (stytch_session_jwt && ydc_stytch_session) {
 > - gemini_pro
 > - gemini_1_5_pro
 
+nextchat直接在自定义模型名添加以下内容即可使用
+```text
+gpt_4,gpt_4_turbo,claude_2,claude_3_opus,claude_3_sonnet,claude_3_haiku,gem_pro,gem_1_5_pro,databricks_dbrx_instruct,command_r,command_r_plus,zephyr
+```
+其中gem_pro与gem_1_5_pro是gemini_pro和gemini_1_5_pro。因为使用原名称会使用google参数进行请求
+
 ## 其他事项
 目前实测ip干净情况下不需要过cf盾。请自测
 

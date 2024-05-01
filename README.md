@@ -56,3 +56,9 @@ if (stytch_session_jwt && ydc_stytch_session) {
 目前实测ip干净情况下不需要过cf盾。请自测
 
 gemini_pro与gemini_1_5_pro同样使用openai API，nextchat可使用名称gem_pro和gem_1_5_pro进行调用
+
+报错 ImportError: cannot import name 'EVENT_TYPE_OPENED' from 'watchdog.events' 使用以下代码更新watchdog
+```bash
+pip install --upgrade watchdog
+```
+

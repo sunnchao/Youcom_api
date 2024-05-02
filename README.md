@@ -80,9 +80,15 @@ pip install --upgrade watchdog
 ## cf盾
 关于cf盾，遇见盾会返回状态码403，无消息内容。
 
-可以尝试http代理解决，更新后的test.py和api.py文件内都有proxy选项，填入http代理即可使用。
+目前测试的cf盾貌似有三种
 
-我测试的 socks5.io 的部分家宽代理可对话，具体自测。如果需要后续可能会加上socks5.io自动更换IP
+1.浏览器和API均不跳盾
+2.浏览器跳盾，API不跳盾
+3.浏览器和API均跳盾
+
+如果跳盾可以尝试http代理解决，更新后的test.py和api.py文件内都有proxy选项，填入http代理即可使用。
+
+我测试的 socks5.io 的部分家宽代理可过盾，具体自测。如果需要后续可能会加上socks5.io自动更换IP
 
 放一个带aff的地址，不喜自去 https://my.socks5.io#CNLRXXRU
 

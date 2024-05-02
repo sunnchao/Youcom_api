@@ -1,6 +1,13 @@
 # Youcom_api
 you.com的逆向api，支持Stream 流式传输
 
+## 测试
+拉取并安装模块后运行
+```bash
+python test.py
+```
+如正常返回对话内容即可正常使用
+
 ## 部署
 ```bash
 git clone https://github.com/len-ni/Youcom_api
@@ -37,7 +44,6 @@ if (stytch_session_jwt && ydc_stytch_session) {
 使用发送API格式内容的对话，可正常返回
 > - gpt_4
 > - gpt_4_turbo
-> - claude_2
 > - claude_3_opus
 > - claude_3_sonnet
 > - claude_3_haiku
@@ -46,6 +52,7 @@ if (stytch_session_jwt && ydc_stytch_session) {
 不支持api格式消息，使用增加提示解决(可能会露馅，未测试)
 > - command_r
 > - zephyr
+> - claude_2
 
 不支持上下文
 > - databricks_dbrx_instruct 

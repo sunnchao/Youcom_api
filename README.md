@@ -78,7 +78,7 @@ pip install --upgrade watchdog
 ```
 
 ## cf盾
-关于cf盾，遇见盾会返回状态码429，无消息内容。
+关于cf盾，遇见盾会返回状态码403，无消息内容。
 
 可以尝试http代理解决，更新后的test.py和api.py文件内都有proxy选项，填入http代理即可使用。
 

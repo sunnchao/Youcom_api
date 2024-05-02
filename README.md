@@ -67,6 +67,12 @@ gpt_4,gpt_4_turbo,claude_2,claude_3_opus,claude_3_sonnet,claude_3_haiku,gem_pro,
 ```
 其中gem_pro与gem_1_5_pro是gemini_pro和gemini_1_5_pro。因为使用原名称会使用google参数进行请求
 
+新增模型(有概率会露馅,请自测,不支持上下文)
+> - claude_3_opus_2k
+基于linuxdo论坛用户的方式，通过上传文件形式超量的文本,可大概率使用opus [链接](https://linux.do/t/topic/68457)
+
+此方法的文本位于根目录的 wb.txt 将 {tihuan1145141919810} 替换为用户的输入信息。如有需要请自行修改(次方法理论不限制输入字数，自测)
+
 ## 其他事项
 目前实测ip干净情况下不需要过cf盾。请自测
 

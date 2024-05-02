@@ -83,7 +83,9 @@ pip install --upgrade watchdog
 目前测试的cf盾貌似有三种
 
 1.浏览器和API均不跳盾
+
 2.浏览器跳盾，API不跳盾
+
 3.浏览器和API均跳盾
 
 如果跳盾可以尝试http代理解决，更新后的test.py和api.py文件内都有proxy选项，填入http代理即可使用。

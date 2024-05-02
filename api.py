@@ -7,7 +7,7 @@ from flask_cors import CORS
 import re
 
 proxy = None
-# 例: proxy = a:a@proxy.socks5.io:3005
+# 例: proxy = 'a:a@proxy.socks5.io:3005'
 
 if proxy:
     proxies = {'http':proxy,'https':proxy}

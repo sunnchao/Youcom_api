@@ -8,7 +8,7 @@ python test.py
 ```
 如正常返回对话内容即可正常使用
 
-如果输出 盾 请尝试http代理 [cf盾](https://github.com/len-ni/Youcom_api/?tab=readme-ov-file#cf%E7%9B%BE)
+如果输出 盾 请尝试[http代理](https://github.com/len-ni/Youcom_api/?tab=readme-ov-file#cf%E7%9B%BE)
 
 ## 部署
 ```bash

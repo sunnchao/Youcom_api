@@ -1,6 +1,6 @@
 # Youcom_api
-you.com的逆向api，支持Stream 流式传输
-新增research 和 create 模型
+you.com的逆向api，支持Stream 流式传输\n
+新增research 和 create 模型\n
 支持Docker部署
 
 ## 测试

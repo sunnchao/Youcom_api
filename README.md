@@ -1,5 +1,7 @@
 # Youcom_api
 you.com的逆向api，支持Stream 流式传输
+新增research 和 create 模型
+支持Docker部署
 
 ## 测试
 拉取并安装模块后运行
@@ -71,6 +73,8 @@ if (stytch_session_jwt && ydc_stytch_session) {
 > - databricks_dbrx_instruct 
 > - gemini_pro
 > - gemini_1_5_pro
+> - research
+> - create
 
 nextchat直接在自定义模型名添加以下内容即可使用
 ```text

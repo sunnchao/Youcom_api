@@ -7,8 +7,10 @@ from flask_cors import CORS
 import re
 import random
 import string
+import os
 
-proxy = None
+proxy = os.getenv("PROXY", None)
+print(f"Proxy is set to: {proxy}")
 ua = 'Mozilla/5.0 (Windows NT 5.0) AppleWebKit/534.2 (KHTML, like Gecko) Chrome/59.0.865.0 Safari/534.2'
 # 例: proxy = a:a@proxy.socks5.io:3005
 
@@ -17,7 +19,7 @@ if proxy:
 else:
     proxies = None
 
-models = ['gpt_4', 'gpt_4_turbo', 'claude_2', 'claude_3_opus', 'claude_3_sonnet', 'claude_3_haiku', 'gemini_pro', 'gemini_1_5_pro', 'databricks_dbrx_instruct', 'command_r', 'command_r_plus', 'zephyr', 'claude_3_opus_2k']
+models = ['gpt_4', 'gpt_4_turbo', 'claude_2', 'claude_3_opus', 'claude_3_sonnet', 'claude_3_haiku', 'gemini_pro', 'gemini_1_5_pro', 'databricks_dbrx_instruct', 'command_r', 'command_r_plus', 'zephyr', 'claude_3_opus_2k', 'research', 'create']
 
 headers = {
     'User-Agent': ua,
@@ -76,9 +78,32 @@ def get_ck_parms(session, session_jwt, chat, chatid, model):
         'chatId':chatid,
         'conversationTurnId':uuid.uuid4(),
         'pastChatLength':0,
-        'isSmallMediumDevice':'true',
         'selectedChatMode':'custom',
         'selectedAIModel':model,
+        'traceId':f'{chatid}|{uuid.uuid4()}|{datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%S.%fZ")}'
+    }
+    return cookies,params
+def get_research_and_creat_parms(session, session_jwt, chat, chatid, model):
+    cookies = {
+        'youpro_subscription': 'true',
+        'stytch_session': session,
+        'stytch_session_jwt': session_jwt,
+        'ydc_stytch_session': session,
+        'ydc_stytch_session_jwt': session_jwt,
+    }
+    params = {
+        'q':chat,
+        'page':1,
+        'count':10,
+        'safeSearch':'Off',
+        'responseFilter':'WebPages,TimeZone,Computation,RelatedSearches',
+        'domain':'youchat',
+        'use_personalization_extraction':'true',
+        'queryTraceId':chatid,
+        'chatId':chatid,
+        'conversationTurnId':uuid.uuid4(),
+        'pastChatLength':0,
+        'selectedChatMode':model,
         'traceId':f'{chatid}|{uuid.uuid4()}|{datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%S.%fZ")}'
     }
     return cookies,params
@@ -99,10 +124,14 @@ def parse_1(data):
         model = 'gemini_1_5_pro'
     elif model not in models:
         model = 'gpt_4_turbo'
+    elif model == 'research':
+        model = 'research'
+    elif model == 'create':
+        model = 'create'
     if model == 'command_r' or model == 'zephyr' or model == 'claude_2':
         add_t = "This is the api format of our previous conversation, please understand and reply to the user's last question"
         messages = add_t + str(messages)
-    elif model == 'databricks_dbrx_instruct' or model == 'gemini_pro'or model == 'gemini_1_5_pro' or model == 'claude_3_opus_2k':
+    elif model == 'databricks_dbrx_instruct' or model == 'gemini_pro'or model == 'gemini_1_5_pro' or model == 'claude_3_opus_2k' or model == 'research' or model == 'create':
         for item in reversed(messages):
             if item['role'] == 'user':
                 messages = item['content']
@@ -111,7 +140,10 @@ def parse_1(data):
 
 def chat_liu(chat, model, session, session_jwt):
     chatid = uuid.uuid4()
-    cookies,params = get_ck_parms(session, session_jwt, chat, chatid, model)
+    if model == 'research' or model == 'create':
+        cookies,params = get_research_and_creat_parms(session, session_jwt, chat, chatid, model)
+    else:
+        cookies,params = get_ck_parms(session, session_jwt, chat, chatid, model)
     response = requests.get(
         'https://you.com/api/streamingSearch',
         cookies=cookies,
@@ -127,12 +159,33 @@ def chat_liu(chat, model, session, session_jwt):
                 if 'event' in data:
                     continue
                 else:
-                    data = data[6:]
-                if 'youChatToken' in data:
+                    data = data[6:]  # Assumes first 6 characters need to be removed
+                try:
+                    json_data = json.loads(data)
+                except json.JSONDecodeError as e:
+                    print(f"JSON Decode Error: {e}, Data: {data}")
+                    continue
+                print(json_data)
+                if 'youChatToken' in json_data or 't' in json_data:
+                    content = 'Generating... '
                     id = str(uuid.uuid4())
-                    content = json.loads(data)['youChatToken']
-                    if 'Please log in to access GPT-4 mode.' in content and 'Answering your question without GPT-4 mode:' in content:
-                        content = 'cookie失效或会员到期，将默认使用智障模型!\n\n'
+                    if model == 'create':
+                        if json_data.get('t') is None:
+                            continue
+                        content = json_data.get('t')
+                    elif 'youChatToken' in json_data:
+                        content = json_data['youChatToken']
+                    elif model == 'research':
+                        if json_data.get('t') is None:
+                            continue
+                        content = json_data.get('t')
+                    try:
+                        if 'Please log in to access GPT-4 mode.' in content and 'Answering your question without GPT-4 mode:' in content:
+                            content = 'cookie失效或会员到期，将默认使用智障模型!\n\n'
+                    except:
+                        pass
+                    if content == 'Generating... ':
+                        continue
                     yield "data: {}\n\n".format(json.dumps({
                         "id": "chatcmpl-"+id,
                         "created": 0,
@@ -288,4 +341,4 @@ def chatv1_1():
         return {"error": "Invalid JSON body"}, 404
 
 if __name__ == '__main__':
-    app.run(debug=True, port=50600)
+    app.run(debug=True, port=50600, host='0.0.0.0')

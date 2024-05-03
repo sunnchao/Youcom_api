@@ -17,8 +17,14 @@ cd Youcom_api
 pip install -r requirements.txt
 python api.py
 ```
-```Docker部署
+### Docker 部署
+#### 不带代理
+```bash
 docker run -d --name you2api -p 50013:50600 michalai1/you2api:latest
+```
+#### 代理
+```bash
+docker run -d -e PROXY=a:a@proxy.socks5.io:30050 --name you2api -p 50013:50600 michalai1/you2api:latest
 ```
 
 

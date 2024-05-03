@@ -17,6 +17,11 @@ cd Youcom_api
 pip install -r requirements.txt
 python api.py
 ```
+```Docker部署
+docker run -d --name you2api -p 50013:50600 michalai1/you2api:latest
+```
+
+
 ## 使用
 请求头需携带Authorization 内容是you.com的cookie。使用以下代码在浏览器F12开发者模式-控制台输入获取,nextchat则设置为API KEY。
 ```bash

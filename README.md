@@ -52,6 +52,12 @@ if (stytch_session_jwt && ydc_stytch_session) {
     msg = '请登录后重试';
 }
 ```
+API KEY 格式为
+```
+ydc_stytch_session_jwt=<token>;ydc_stytch_session=<token>
+```
+将\<token>替换为对应的token
+
 
 调用参数为openai API所需的参数
 ```request body
